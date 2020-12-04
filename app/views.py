@@ -7,6 +7,7 @@ import datetime
 todo = Blueprint('todo', __name__, template_folder='templates', static_folder='static')
 
 from app import *
+from app import mongo
  
 
 @todo.route('/')
