@@ -19,9 +19,9 @@
                                 <input type="text" class="form-control add-task" name='task' placeholder="New Task...">
                             </form>
                             <ul class="nav nav-pills todo-nav">
-                                <li role="presentation" class="nav-item all-task active"><a href="#" class="nav-link">All</a></li>
-                                <li role="presentation" class="nav-item active-task"><a href="#" class="nav-link">Active</a></li>
-                                <li role="presentation" class="nav-item completed-task"><a href="#" class="nav-link">Completed</a></li>
+                                <li role="presentation" class="nav-item all-task active"><a href="{{ url_for('todo.index') }}" class="nav-link">All</a></li>
+                                <li role="presentation" class="nav-item active-task"><a href="{{ url_for('todo.active') }}" class="nav-link">Active</a></li>
+                                <li role="presentation" class="nav-item completed-task"><a href="{{ url_for('todo.completed') }}" class="nav-link">Completed</a></li>
                             </ul>
 
 
@@ -34,7 +34,7 @@
                                         </span>
                                     </div> -->
                                     <span>{{ task['task'] }}</span>
-                                    <a href="{{ url_for('todo.delete_todo', id=task._id) }}" class="btn btn-outline-danger">Delete</a>
+                                    <a href="{{ url_for('todo.delete_todo', id=task._id) }}" class="btn btn-outline-danger">Completed</a>
                                     <!-- <button type="button" class="btn btn-outline-danger">
                                         <a href="{{ url_for('todo.update_todo', id=task._id) }}" class="" data-toggle="modal" data-target="#exampleModal">Update</a>
                                     </button> -->

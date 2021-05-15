@@ -23,16 +23,17 @@ def add_todo():
         task = request.form['task']
         current_time = datetime.datetime.now()
 
-        task = mongo.db.task.insert({'task': task, 'datetime': current_time})
+        task = mongo.db.task.insert({'task': task, 'datetime': current_time, 'active': 1, 'complete': 0})
 
         return redirect(url_for('todo.index'))
     
     return render_template('index.html')
 
 
-@todo.route('/<id>/delete', methods=['DELETE', 'GET'])
+@todo.route('/<id>/update', methods=['PUT', 'GET', 'POST'])
 def delete_todo(id):
-    task = mongo.db.task.delete_one({'_id':ObjectId(id)})
+    moved = mongo.db.task.update_one({'_id': ObjectId(id)}, {'$set':{'active': 0, 'complete': 1}})
+    # task = mongo.db.task.delete_one({'_id':ObjectId(id)})
     return redirect(url_for('todo.index'))
 
 
@@ -55,3 +56,20 @@ def update_todo(id):
         task = mongo.db.task.update_one({'_id':ObjectId(id)}, {'task': task, 'datetime': current_time})
 
     return redirect(url_for('todo.index'))
+
+
+@todo.route('/active', methods=['GET'])
+def active():
+    if request.method == 'GET':
+        get_active = mongo.db.task.find({'active': 1})
+        print(get_active)
+
+        return render_template('index.html', tasks=get_active)
+
+
+@todo.route('/completed', methods=['GET'])
+def completed():
+    if request.method == 'GET':
+        completed = mongo.db.task.find({'complete': 1})
+
+        return render_template('index.html', tasks=completed)
